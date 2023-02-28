@@ -1,12 +1,12 @@
 # GrubDash
 Set up restful API 
 
-##Project description: GrubDash
+## Project description: GrubDash
 You've been hired as a backend developer for a new startup called GrubDash! As another developer works on the design and frontend experience, you have been tasked with setting up an API and building out specific routes so that the frontend developers can demo some initial design ideas for the big bosses.
 
 For detailed instructions on how to complete this project, consult the Instructions document in the Qualified assessment interface.
 
-##Learning objectives
+## Learning objectives
 This project will test your ability to build APIs with complex validation. Before taking on this project, you should be comfortable with the learning objectives listed below:
 
 Running tests from the command line
@@ -22,7 +22,7 @@ Building an API following RESTful design principles
 Writing custom middleware functions
 
 
-##Tasks
+## Tasks
 In the src/dishes/dishes.controller.js file, add handlers and middleware functions to create, read, update, and list dishes. Note that dishes cannot be deleted.
 
 In the src/dishes/dishes.router.js file, add two routes: /dishes and /dishes/:dishId. Attach the handlers (create, read, update, and list) exported from src/dishes/dishes.controller.js.
