@@ -9,7 +9,7 @@ const nextId = require("../utils/nextId");
 // TODO: Implement the /dishes handlers needed to make the tests pass
 
 // Create & helper functions 
-const bodyHasDescription = (req, res, next) => {
+function bodyHasDescription(req, res, next){
     const { data: { description } = {} } = req.body;
     if(!!description && description !== "") return next();
     next({
@@ -17,7 +17,7 @@ const bodyHasDescription = (req, res, next) => {
         message: "Dish must include a description."
     });
 };
-const bodyHasName = (req, res, next) => {
+function bodyHasName(req, res, next){
     const { data: { name } = {} } = req.body;
     if(!!name && name !== "") return next();
     next({
@@ -25,7 +25,7 @@ const bodyHasName = (req, res, next) => {
         message: "Dish must include a name."
     });
 };
-const bodyHasPrice = (req, res, next) => {
+function bodyHasPrice(req, res, next){
     const { data: { price } = {} } = req.body;
     if(!!price) return next();
     next({
@@ -33,7 +33,7 @@ const bodyHasPrice = (req, res, next) => {
         message: "Dish must include a price."
     });
 };
-const priceIsValid = (req, res, next) => {
+function priceIsValid(req, res, next){
     const { data: { price } = {} } = req.body;
     if((parseInt(price) > 0) && (typeof(price) === "number")) return next();
     next({
@@ -50,7 +50,7 @@ const bodyHasImageUrl = (req, res, next) => {
     });
 };
 
-const create = (req, res, next) => {
+function create(req, res, next){
     const { data: { name, description, price, image_url } = {} } = req.body;
     const newDish = {
         id: nextId(),
@@ -64,7 +64,7 @@ const create = (req, res, next) => {
 };
 
 // Dish Exists middleware function
-const dishExists = (req, res, next) => {
+function dishExists(req, res, next){
     const { dishId } = req.params;
     const foundDish = dishes.find(dish => dish.id === dishId);
     if(!!foundDish){
@@ -78,17 +78,17 @@ const dishExists = (req, res, next) => {
 };
 
 // List function
-const list = (req, res) => {
+function list(req, res){
     res.json({ data: dishes })
 };
 
 // Read
-const read = (req, res) => {
+function read(req, res){
     res.json({ data: res.locals.dish });
 };
 
 // Update
-const update = (req, res, next) => {
+function update(req, res, next){
     const { data: { name, description, price, image_url } = {} } = req.body;
     const dish = res.locals.dish;
     const origName = dish.name;
@@ -110,7 +110,7 @@ const update = (req, res, next) => {
     res.json({ data: dish });
 };
 
-const validateId = (req, res, next) => {
+function validateId(req, res, next){
     const { data: { id } = {} } = req.body;
     const { dishId } = req.params;
     if(!id || id === dishId){
