@@ -8,7 +8,7 @@ const nextId = require("../utils/nextId");
 
 
 // Create and helper functions
-const bodyHasDeliverTo = (req, res, next) => {
+function bodyHasDeliverTo(req, res, next){
     const { data: { deliverTo } = {} } = req.body;
     if(!!deliverTo && deliverTo !== "") return next();
     next({
@@ -16,7 +16,7 @@ const bodyHasDeliverTo = (req, res, next) => {
         message: "Order must include a deliverTo."
     });
 };
-const bodyHasMobileNumber = (req, res, next) => {
+function bodyHasMobileNumber(req, res, next){
     const { data: { mobileNumber } = {} } = req.body;
     if(!!mobileNumber && mobileNumber !== "") return next();
     next({
@@ -24,7 +24,7 @@ const bodyHasMobileNumber = (req, res, next) => {
         message: "Order must include a mobileNumber."
     });
 };
-const bodyHasDishes = (req, res, next) => {
+function bodyHasDishes(req, res, next){
     const { data: { dishes } = {} } = req.body;
     if(!!dishes) return next();
     next({
@@ -32,7 +32,7 @@ const bodyHasDishes = (req, res, next) => {
         message: "Order must include a dish."
     });
 };
-const dishesPropertyIsValid = (req, res, next) => {
+function dishesPropertyIsValid(req, res, next){
     const { data: { dishes } = {} } = req.body;
     if(Array.isArray(dishes) && dishes.length !== 0) return next();
     next({
@@ -40,7 +40,7 @@ const dishesPropertyIsValid = (req, res, next) => {
         message: "Order must include at least one dish."
     });
 };
-const dishesHaveQuantity = (req, res, next) => {
+function dishesHaveQuantity(req, res, next){
     const { data: { dishes } = {} } = req.body;
     for(let index = 0; index < dishes.length; index++){
         if(!dishes[index].quantity || dishes[index].quantity <= 0 || !Number.isInteger(dishes[index].quantity)){
@@ -53,7 +53,7 @@ const dishesHaveQuantity = (req, res, next) => {
     next();
 };
 
-const create = (req, res, next) => {
+function create(req, res, next){
     const { data: { deliverTo, mobileNumber, dishes } = {} } = req.body;
     const newOrder = {
         id: nextId(),
@@ -66,7 +66,7 @@ const create = (req, res, next) => {
     res.status(201).json({ data: newOrder });
 };
 
-const destroy = (req, res, next) => {
+function destroy(req, res, next){
     const { orderId } = req.params;
     const index = orders.findIndex(order => order.id === orderId);
     if(res.locals.order.status !== "pending") {
@@ -76,12 +76,12 @@ const destroy = (req, res, next) => {
     res.sendStatus(204);
 };
 
-const list = (req, res) => {
+function list(req, res){
     res.json({ data: orders });
 };
 
 // Order Exists middleware function
-const orderExists = (req, res, next) => {
+function orderExists(req, res, next){
     const { orderId } = req.params;
     const foundOrder = orders.find(order => order.id === orderId);
     if(!!foundOrder){
@@ -95,12 +95,12 @@ const orderExists = (req, res, next) => {
 };
 
 // Read
-const read = (req, res) => {
+function read(req, res){
     res.json({ data: res.locals.order })
 };
 
 // Update and helper functions
-const update = (req, res, next) => {
+function update(req, res, next){
     const { data: { deliverTo, mobileNumber, dishes, status } = {} } = req.body;
     const order = res.locals.order;
     const origDeliverTo = order.deliverTo;
@@ -122,7 +122,7 @@ const update = (req, res, next) => {
     res.json({ data: order });
 };
 
-const validateId = (req, res, next) => {
+function validateId(req, res, next){
     const { data: { id } = {} } = req.body;
     const { orderId } = req.params;
     if(!id || id === orderId){
@@ -134,7 +134,7 @@ const validateId = (req, res, next) => {
         message: `Order id does not match route id. Order: ${id}, Route: ${orderId}.`,
     });
 };
-const validateStatus = (req, res, next) => {
+function validateStatus(req, res, next){
     const { data: { status } = {} } = req.body;
     if( !status || status === "" || (status !== "pending" && status !== "preparing" && status !== "out-for-delivery")) {
         return next({
