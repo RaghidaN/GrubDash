@@ -10,7 +10,7 @@ const nextId = require("../utils/nextId");
 // Create and helper functions
 function bodyHasDeliverTo(req, res, next){
     const { data: { deliverTo } = {} } = req.body;
-    if(!!deliverTo && deliverTo !== "") return next();
+    if(deliverTo && deliverTo !== "") return next();
     next({
         status: 400,
         message: "Order must include a deliverTo."
@@ -18,7 +18,7 @@ function bodyHasDeliverTo(req, res, next){
 };
 function bodyHasMobileNumber(req, res, next){
     const { data: { mobileNumber } = {} } = req.body;
-    if(!!mobileNumber && mobileNumber !== "") return next();
+    if(mobileNumber && mobileNumber !== "") return next();
     next({
         status: 400,
         message: "Order must include a mobileNumber."
@@ -26,7 +26,7 @@ function bodyHasMobileNumber(req, res, next){
 };
 function bodyHasDishes(req, res, next){
     const { data: { dishes } = {} } = req.body;
-    if(!!dishes) return next();
+    if(dishes) return next();
     next({
         status: 400,
         message: "Order must include a dish."
