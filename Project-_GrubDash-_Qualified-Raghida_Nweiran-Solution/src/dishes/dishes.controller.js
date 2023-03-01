@@ -11,7 +11,7 @@ const nextId = require("../utils/nextId");
 // Create & helper functions 
 function bodyHasDescription(req, res, next){
     const { data: { description } = {} } = req.body;
-    if(!!description && description !== "") return next();
+    if(description && description !== "") return next();
     next({
         status: 400,
         message: "Dish must include a description."
@@ -19,7 +19,7 @@ function bodyHasDescription(req, res, next){
 };
 function bodyHasName(req, res, next){
     const { data: { name } = {} } = req.body;
-    if(!!name && name !== "") return next();
+    if(name && name !== "") return next();
     next({
         status: 400,
         message: "Dish must include a name."
@@ -27,7 +27,7 @@ function bodyHasName(req, res, next){
 };
 function bodyHasPrice(req, res, next){
     const { data: { price } = {} } = req.body;
-    if(!!price) return next();
+    if(price) return next();
     next({
         status: 400,
         message: "Dish must include a price."
@@ -43,7 +43,7 @@ function priceIsValid(req, res, next){
 };
 const bodyHasImageUrl = (req, res, next) => {
     const { data: { image_url } = {} } = req.body;
-    if(!!image_url && image_url !== "") return next();
+    if(image_url && image_url !== "") return next();
     next({
         status: 400,
         message: "Dish must include a image_url."
